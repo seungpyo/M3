@@ -1,0 +1,2 @@
+Server crash: failed to receive IPC message: Invalid argument
+MemMapManager::Subscribe failed to bind client socket: Address already in use
