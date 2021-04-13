@@ -15,12 +15,14 @@ The server class is implemented in singleton pattern, thus every call of `Instan
 
 ## M3 APIs
 Currently, M3 supports APIs below:
-### `MemMapManager::RequestRegister(ProcessInfo &pInfo, int sock_fd)`
+### RequestRegister
+`MemMapManager::RequestRegister(ProcessInfo &pInfo, int sock_fd)`
 Registers client process info to M3 server. The process info is passed by argument `pInfo`.
 
 This API is left for future use. The list of subscribers can be used for access control, request validation, etc.
 
-### `MemMapManager::RequestRoundedAllocationSize(ProcessInfo &pInfo, int sock_fd, size_t num_bytes);`
+### RequestRoundedAllocationSize
+`MemMapManager::RequestRoundedAllocationSize(ProcessInfo &pInfo, int sock_fd, size_t num_bytes);`
 Get allocation size, rounded up by minimum memory granularity.
 
 CUDA environment has a minimum granularity size whicih is determined by device. If we try to allocate a memory region whose size is not a multiple of the granularity, CUDA APIs may throw an error.
@@ -29,7 +31,8 @@ It is the M3 server that determines which GPU device to allocate memory, minimum
 
 User **MUST** call this API before calling `MemMapManager::RequestAllocate()`.
 
-### `MemMapManager::RequestAllocate(ProcessInfo &pInfo, int sock_fd, char * memId, size_t alignment, size_t num_bytes);`
+### RequestAllocate
+`MemMapManager::RequestAllocate(ProcessInfo &pInfo, int sock_fd, char * memId, size_t alignment, size_t num_bytes);`
 Allocate a memory region in GPU device.
 
 `memId` works as a hint for memory reuse. If M3 server finds a memory region which is tagged with the same `memId`, the region is not allocated redundantly. Instead, a handler to the region is passed to the client. The client uses the handler to map the region into its own virtual address space.
